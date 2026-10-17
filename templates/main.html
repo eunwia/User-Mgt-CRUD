@@ -1,0 +1,54 @@
+{% extends 'base.html'%}
+{% block content %}
+	
+	<button class='w3-button w3-green w3-right' onclick="logout()">LOGOUT</button>
+	<button class='w3-button w3-blue ' onclick="modalcontrol('mymodal','block')">+ADD</button>
+	
+	<br><br>
+	<table class='w3-table-all'>
+		<tr>
+			<th>ID</th>
+			<th>USERNAME</th>
+			<th>PASSWORD</th>
+			<th>ACTION</th>
+		</tr>
+		{% for user in userlist %}
+		<tr>
+			<td>{{ user['id'] }}</td>
+			<td>{{ user['username'] }}</td>
+			<td>{{ user['password'] }}</td>
+			<td>
+				<button onclick="edituser('{{ user['id'] }}','{{ user['username'] }}','{{ user['password'] }}')">&#128393;</button>
+				<button onclick="deleteuser({{ user['id'] }})">&times;</button>
+			</td>
+		</tr>
+		{% endfor%}
+	</table>
+	<div class="w3-modal" id="mymodal">
+		<div class="w3-modal-content w3-animate-top">
+			<div class="w3-container w3-blue">
+				<h4>USER</h4>
+				<button class='w3-button w3-display-topright' onclick="modalcontrol('mymodal','none')">&times;</button>
+			</div>
+			<div class='w3-container w3-padding'>
+				<form action="/saveuser" method='post'>
+					<input type='hidden' name='type' id='type' value='add'>
+					<input type='hidden' name='id' id='id'>
+					<p>
+						<label>USERNAME</label>
+						<input type='text' name='username' id='username' class='w3-input'>
+					</p>
+					<p>
+						<label>PASSWORD</label>
+						<input type='text' name='password' id='password' class='w3-input'>
+					</p>
+					<p>
+						<input type='submit' value='&#128427; SAVE' class='w3-right'>
+					</p>
+				</form>
+			</div>
+		</div>
+	</div>
+	
+	
+{% endblock %}
